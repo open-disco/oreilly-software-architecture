@@ -1,6 +1,7 @@
 const superagent = require('superagent');
 
-const RegistryURL = 'http://46.101.144.137:8282';
+const RegistryURL = 'http://46.101.144.137:8282'; // http://rwmbook-registry.herokuapp.com
+
 const ActualWeatherProfileId = 'http://alps.io/profiles/actual-weather';
 const ExistingProfileId = 'http://schema.org/CreativeWork';
 

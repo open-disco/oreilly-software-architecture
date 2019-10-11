@@ -1,0 +1,42 @@
+openapi: 3.0.0
+info:
+  version: "1.0.0"
+  title: "ACME Weather Service"
+  description: "Weather service from ACME Corp."
+
+paths:
+  /weather:
+    get:
+      x-profile: 'http://alps.io/profiles/actual-weather#weather-lookup'
+
+      parameters:
+        - name: addressLocality
+          in: query
+          x-profile: 'http://alps.io/profiles/actual-weather#weather-lookup/addressLocality'
+
+          description: >
+            Returns the weather at a given locality, or 404-not found if the locality isn't known.
+          schema:
+            type: string
+            example: Paris
+
+      responses:
+        "200":
+          description: >
+            Weather at the given locality
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  airTemperature:
+                    type: number
+                    x-profile: 'http://alps.io/profiles/actual-weather#weather/airTemperature'
+
+                  windDirection:
+                    type: string
+                    x-profile: 'http://alps.io/profiles/actual-weather#weather/windDirection'
+
+                example:
+                  airTemperature: 16
+                  windDirection: "ENE"
