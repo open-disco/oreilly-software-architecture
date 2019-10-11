@@ -1,4 +1,6 @@
 const http = require('http');
+const discovery = require('./disco/discovery');
+
 const PORT = 3300;
 
 // Default response headers
@@ -22,6 +24,11 @@ const server = http
     console.log(`to shutdown run: $ kill ${process.pid}`)
   });
 
+// Register the service 
+discovery.register(null, (data, response) => {
+  console.log('service registered');
+});
+
 // Server handler
 function acmeServerHandler(request, response) {
   console.info('request received');
@@ -31,8 +38,12 @@ function acmeServerHandler(request, response) {
 
 // Shutdown routine
 process.on('SIGTERM', () => {
-  server.close(() => {
-    console.log('gracefully shutting down');
-    process.exit(0);
+  discovery.unregister(null, () => {
+    console.log('service unregistered');
+
+    server.close(() => {
+      console.log('gracefully shutting down');
+      process.exit(0);
+    });  
   });
 });
