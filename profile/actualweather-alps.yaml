@@ -1,0 +1,36 @@
+alps:
+  version: '1.0'
+  doc:
+    value: Actual weather for address locality
+  id: http://alps.io/profiles/actual-weather
+
+  # Weather lookup affordance for given addressLocality
+  descriptor:
+  - id: weather-lookup
+    type: safe
+    rt: weather
+    doc:
+      value: Look up weather at given address locality
+      
+    descriptor:
+    - id: addressLocality
+      type: semantic
+      href: https://schema.org/addressLocality
+
+  # Weather at a given locality
+  #
+  # NOTE: There is, of course, more to weather than temperature and wind direction
+  #       https://github.com/schemaorg/schemaorg/issues/362
+  - id: weather
+    type: semantic
+    doc:
+      value: Weather at a locality
+
+    descriptor:
+    - id: airTemperature
+      type: semantic
+      text: Air temperature in degrees of Celsius
+
+    - id: windDirection
+      type: semantic
+      text: True direction of the wind
