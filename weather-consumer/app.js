@@ -46,8 +46,6 @@ async function queryWeatherServices(weatherServices) {
   console.log(`querying ${weatherServices.length} service(s)...`)
 
   weatherServices.forEach(async (service) => {
-    console.log(service.serviceURL);
-
     client = new ProfileConsumer(service.serviceURL, ActualWeatherProfileId);
     const response = await client.perform(
       'weather-lookup',             // http://alps.io/profiles/actual-weather#weather-lookup
@@ -55,8 +53,8 @@ async function queryWeatherServices(weatherServices) {
         addressLocality: 'Paris'    // http://alps.io/profiles/actual-weather#addressLocality
       },
       // tag`{
-      //   airTemperature,       
-      //   windDirection         
+      //   airTemperature,
+      //   windDirection
       // }`,
     );
 

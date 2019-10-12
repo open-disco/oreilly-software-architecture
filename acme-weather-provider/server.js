@@ -37,7 +37,7 @@ discovery.register(null, (data, response) => {
 // Server handler
 function acmeServerHandler(request, response) {
   const requestURL = url.parse(request.url);
-  console.info(`request ${requestURL.pathname}`);
+  console.info(`request ${requestURL.pathname}${(requestURL.search)?requestURL.search:''}`);
   
   if (requestURL.pathname === '/weather') {
     response.writeHead(200, responseHeaders);
