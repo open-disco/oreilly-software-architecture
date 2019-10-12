@@ -59,6 +59,6 @@ async function queryWeatherServices(weatherServices) {
         ]
       );
 
-    console.log('<---', response);
+    console.log(`<--- ${service.serviceURL}:` , response);
   });
 }

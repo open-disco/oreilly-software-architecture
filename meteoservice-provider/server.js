@@ -3,12 +3,12 @@ const url = require('url');
 const discovery = require('../lib/disco/discovery');
 
 // This service's port
-const PORT = 3300;
+const PORT = 3301;
 
 // Open DISCO Settings
 // http://www.open-disco.org
 const discoSettings = {
-  
+
   // General settings
   verbose: true,
   registryID: null,
@@ -17,7 +17,7 @@ const discoSettings = {
   acceptType: 'application/json',
 
   // Service identifiers
-  serviceName: 'ACME Weather Service',
+  serviceName: 'Méteo service',
   serviceURL: `http://localhost:${PORT}`,
   tags: 'weather-lookup',
   semanticProfile: 'http://alps.io/profiles/actual-weather',
@@ -34,7 +34,7 @@ const discoSettings = {
 
 // API Specification
 const yaml = require('../lib/readYaml');
-const apiSpecification = yaml.readYAMLFile('./acme-weather-openapi3.yaml');
+const apiSpecification = yaml.readYAMLFile('./meteoservice-openapi3.yaml');
 
 // Default response headers
 const responseHeaders = {
@@ -45,8 +45,9 @@ const responseHeaders = {
 
 // Mock response body
 const weatherResponseBody = {
-  "airTemperature": 16,
-  "windDirection": "ENE"
+  temperature: 15.3,
+  roseePoint: 2.1,
+  vent: "SWS"
 };
 
 // Run the service
@@ -65,15 +66,27 @@ discovery.register(discoSettings, (data, response) => {
 // Server handler
 function acmeServerHandler(request, response) {
   const requestURL = url.parse(request.url);
-  console.info(`request ${requestURL.pathname}${(requestURL.search)?requestURL.search:''}`);
-  
-  if (requestURL.pathname === '/weather') {
-    response.writeHead(200, responseHeaders);
+  console.info(`<--- ${request.method} ${requestURL.pathname}${(requestURL.search) ? requestURL.search : ''}`);
+  console.log('<--- headers:', JSON.stringify(request.headers, '', 2));
+
+  let requestBody = [];
+  request.on('data', (chunk) => {
+    requestBody.push(chunk);
+  }).on('end', () => {
+    requestBody = Buffer.concat(requestBody).toString();
+    if (requestBody) {
+      console.log('<--- body:', requestBody);
+    }
+    console.log('\n');
+  });
+
+  if (requestURL.pathname === '/meteo/actuelle') {
+    response.writeHead(201, responseHeaders);
     response.end(JSON.stringify(weatherResponseBody, '', 2));
   }
   else if (requestURL.pathname === '/oas') {
     response.writeHead(200, responseHeaders);
-    response.end(JSON.stringify(apiSpecification, '', 2))    
+    response.end(JSON.stringify(apiSpecification, '', 2))
   }
   else {
     response.writeHead(404, responseHeaders);
