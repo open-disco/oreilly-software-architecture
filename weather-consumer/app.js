@@ -36,34 +36,30 @@ async function findWeatherLookupServices() {
   return services;
 }
 
-//
-// Bind to services
-//
-// ...
+// TODO: Bind to services if needed
 
 // Query the services
 async function queryWeatherServices(weatherServices) {
   console.log(`querying ${weatherServices.length} service(s)...`)
 
   weatherServices.forEach(async (service) => {
-    client = new ProfileConsumer(service.serviceURL, ActualWeatherProfileId);
-    const response = await client.perform(
-      'weather-lookup',             // http://alps.io/profiles/actual-weather#weather-lookup
-      {
-        addressLocality: 'Paris'    // http://alps.io/profiles/actual-weather#addressLocality
-      },
-      // tag`{
-      //   airTemperature,
-      //   windDirection
-      // }`,
-    );
 
-    // http://alps.io/profiles/actual-weather#airTemperature
-    // http://alps.io/profiles/actual-weather#windDirection
+    // Create a client for each service
+    client = new ProfileConsumer(service.serviceURL, ActualWeatherProfileId);
+
+    // Invoke the requested affordance
+    const response = await 
+      client.perform(
+        'weather-lookup',             // http://alps.io/profiles/actual-weather#weather-lookup
+        {
+          addressLocality: 'Paris'    // http://alps.io/profiles/actual-weather#addressLocality
+        },
+        [ 
+          'airTemperature',           // http://alps.io/profiles/actual-weather#airTemperature
+          'windDirection'             // http://alps.io/profiles/actual-weather#windDirection
+        ]
+      );
 
     console.log('<---', response);
   });
 }
-
-
-// Print results

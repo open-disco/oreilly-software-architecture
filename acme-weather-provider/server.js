@@ -26,7 +26,7 @@ const server = http
   .createServer(acmeServerHandler)
   .listen(PORT, () => {
     console.log(`listening http://localhost:${PORT}/`);
-    console.log(`to shutdown run: $ kill ${process.pid}`)
+    console.log(`to shutdown run: $ kill ${process.pid}`);
   });
 
 // Register the service 

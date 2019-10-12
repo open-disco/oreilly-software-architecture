@@ -13,7 +13,7 @@ class ProfileConsumer {
   //
   // Invoke affordance
   //
-  async perform(affordanceId, parameters, response) {
+  async perform(affordanceId, parameters, requestedResponse) {
     console.log('---> invoking ', affordanceId, parameters, this.providerURL);
 
     // Fetch OpenAPI Specification (if not already)
@@ -28,9 +28,10 @@ class ProfileConsumer {
     // Execute the request
     const result = await this.execute(request);
 
-    // Resolve response
+    // Normalize the response
+    const normalizedResponse = this.normalizeResponse(operation, result, requestedResponse);
 
-    return Promise.resolve(result);
+    return Promise.resolve(normalizedResponse);
   }
 
   //
@@ -149,6 +150,30 @@ class ProfileConsumer {
       // console.error(e);
       return Promise.reject(e);
     }
+  }
+
+  //
+  // Normalizes the response to the profile
+  //
+  normalizeResponse(operation, response, requestedResponse) {
+    // Fully qualify the requested response
+    let qualifiedProperties = [];
+    requestedResponse.forEach((element) => {
+      qualifiedProperties.push(`${this.profileId}#${element}`);
+    });
+    
+    // Naive, flat traversal
+    // TODO: reivisti for real objects
+    const result = {}
+    const schemaProperties = operation.responseSchema.properties;
+    for (const property in schemaProperties) {
+      const index = qualifiedProperties.indexOf(schemaProperties[property]['x-profile']);
+      if (index >= 0) {
+        result[requestedResponse[index]] = response[property];
+      }
+    }
+
+    return result;
   }
 
 };
