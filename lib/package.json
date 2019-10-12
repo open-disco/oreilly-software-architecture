@@ -1,0 +1,11 @@
+{
+  "name": "open-disco-library",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Zdenek Nemec <z@goodapi.co>",
+  "license": "MIT",
+  "dependencies": {
+    "js-yaml": "^3.13.1",
+    "superagent": "^5.1.0"
+  }
+}

@@ -1,0 +1,45 @@
+openapi: 3.0.0
+info:
+  version: "1.0.0"
+  title: "Méteo service"
+  description: "Service qui offre les prévisions météorologiques actuelles."
+
+paths:
+  /meteo/actuelle:
+    post:
+      x-profile: 'http://alps.io/profiles/actual-weather#weather-lookup'
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                city:
+                  type: string
+                  x-profile: 'http://alps.io/profiles/actual-weather#addressLocality'
+                  example: 'Vannes'
+              required: 
+                - city
+
+      responses:
+        "201":
+          description: Méteo actuelle
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  temperature:
+                    type: number
+                    x-profile: 'http://alps.io/profiles/actual-weather#airTemperature'
+                  roseePoint:
+                    type: number
+                  vent:
+                    type: string
+                    x-profile: 'http://alps.io/profiles/actual-weather#windDirection'
+
+                example:
+                  temperature: 15.3
+                  roseePoint: 2.1                  
+                  vent: "SWS"

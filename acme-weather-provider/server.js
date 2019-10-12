@@ -1,12 +1,37 @@
 const http = require('http');
-const url = require("url");
+const url = require('url');
+const discovery = require('../lib/disco/discovery');
 
-const discovery = require('./disco/discovery');
+// Open DISCO Settings
+// http://www.open-disco.org
+const discoSettings = {
+  
+  // General settings
+  verbose: true,
+  registryID: null,
+  renewTTL: 300000,
+  contentType: "application/json",
+  acceptType: "application/json",
 
-const yaml = require('./readYaml');
+  // Service identifiers
+  serviceName: "ACME Weather Service",
+  serviceURL: "http://localhost:3300",
+  tags: "weather-lookup",
+  semanticProfile: "http://alps.io/profiles/actual-weather",
+  healthURL: "http://localhost:3300",
+  healthTTL: "86400",
+
+  // Registry service endpoints
+  registerURL: "http://localhost:8282/reg/",
+  renewURL: "http://localhost:8282/renew/",
+  unregisterURL: "http://localhost:8282/unreg/",
+  findURL: "http://localhost:8282/find/",
+  bindURL: "http://localhost:8282/bind/"
+};
+
+// API Specification
+const yaml = require('../lib/readYaml');
 const apiSpecification = yaml.readYAMLFile('./acme-weather-openapi3.yaml');
-
-const PORT = 3300;
 
 // Default response headers
 const responseHeaders = {
@@ -22,6 +47,7 @@ const weatherResponseBody = {
 };
 
 // Run the service
+const PORT = 3300;
 const server = http
   .createServer(acmeServerHandler)
   .listen(PORT, () => {
@@ -30,7 +56,7 @@ const server = http
   });
 
 // Register the service 
-discovery.register(null, (data, response) => {
+discovery.register(discoSettings, (data, response) => {
   console.log('service registered');
 });
 
@@ -57,7 +83,7 @@ function acmeServerHandler(request, response) {
 
 // Shutdown routine
 process.on('SIGTERM', () => {
-  discovery.unregister(null, () => {
+  discovery.unregister(discoSettings, () => {
     console.log('service unregistered');
 
     server.close(() => {

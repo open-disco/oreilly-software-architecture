@@ -1,11 +1,10 @@
 const superagent = require('superagent');
-const ProfileConsumer = require('./ProfileConsumer');
+const ProfileConsumer = require('./../lib/consumer/ProfileConsumer');
 
 const RegistryURL = 'http://46.101.144.137:8282'; // http://rwmbook-registry.herokuapp.com
-
 const ActualWeatherProfileId = 'http://alps.io/profiles/actual-weather';  // TODO: Single source of truth for this ID
-const ExistingProfileId = 'http://schema.org/CreativeWork';
 
+// Let's go
 main();
 
 //
