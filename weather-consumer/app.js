@@ -61,7 +61,7 @@ async function queryWeatherServices(weatherServices) {
     // http://alps.io/profiles/actual-weather#airTemperature
     // http://alps.io/profiles/actual-weather#windDirection
 
-    console.log(response);
+    console.log('<---', response);
   });
 }
 

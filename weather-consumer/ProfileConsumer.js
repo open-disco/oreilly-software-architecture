@@ -24,14 +24,13 @@ class ProfileConsumer {
 
     // Build request according to OpenAPI Specification and input parameters
     const request = this.buildRequest(operation, parameters);
-    console.log(request);
 
     // Execute the request
-    this.execute(request);
+    const result = await this.execute(request);
 
     // Resolve response
 
-    return Promise.resolve({ someValue: 42 });
+    return Promise.resolve(result);
   }
 
   //
@@ -47,6 +46,7 @@ class ProfileConsumer {
           this.apiSpecification = response.body;
       }
       catch (e) {
+        // console.error(e);
         return Promise.reject(e);
       };
     }
@@ -76,7 +76,8 @@ class ProfileConsumer {
           return {
             url: pathKey,
             method: operationKey,
-            details: operation
+            details: operation,
+            responseSchema: operation.responses['200'].content['application/json'].schema
           };
         }
       }
@@ -120,17 +121,12 @@ class ProfileConsumer {
       }
     });
 
-    //
-    // Process OAS headers
-    //
-    // TODO:
-
-    //
-    // Process OAS consumes / produces
-    //
-    // TODO: 
-    headers['Accept'] = 'application/json';
+    // TODO: Process OAS headers
+    // TODO: Process OAS consumes / produces
+    // TODO: Process authentication
     
+    // Always accept JSON
+    headers['accept'] = 'application/json';
 
     return { url, method, query, headers, body };
   }
@@ -139,18 +135,21 @@ class ProfileConsumer {
   // Execute request
   //
   async execute(request) {
-    console.log(request.query.join('&'));
     try {
-      await superagent(
-        request.method, 
-        request.url)
-        .query(request.query.join('&'))
-        .set(request.headers);
+      let response = 
+        await superagent(
+          request.method, 
+          request.url)
+          .query(request.query.join('&'))
+          .set(request.headers);
+      
+      return Promise.resolve(response.body);
     }
     catch(e) {
-      console.log(e);
+      // console.error(e);
+      return Promise.reject(e);
     }
-  } 
+  }
 
 };
 
