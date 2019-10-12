@@ -16,6 +16,9 @@ settings.acceptType = "application/json";
 settings.serviceName = "ACME Weather Service";
 settings.serviceURL = "http://localhost:3300";
 settings.tags = "weather-lookup";
+settings.semanticProfile = "http://alps.io/profiles/actual-weather";  // TODO: Single source of truth for this ID
+settings.healthURL = "http://localhost:3300";
+settings.healthTTL = "86400";
 
 // the registry service endpoints
 settings.registerURL = "http://localhost:8282/reg/";

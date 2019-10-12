@@ -1,6 +1,10 @@
 const http = require('http');
 const url = require("url");
+
 const discovery = require('./disco/discovery');
+
+const yaml = require('./readYaml');
+const apiSpecification = yaml.readYAMLFile('./acme-weather-openapi3.yaml');
 
 const PORT = 3300;
 
@@ -12,7 +16,7 @@ const responseHeaders = {
 };
 
 // Mock response body
-const responseBody = {
+const weatherResponseBody = {
   "airTemperature": 16,
   "windDirection": "ENE"
 };
@@ -37,11 +41,17 @@ function acmeServerHandler(request, response) {
   
   if (requestURL.pathname === '/weather') {
     response.writeHead(200, responseHeaders);
-    response.end(JSON.stringify(responseBody, '', 2));
+    response.end(JSON.stringify(weatherResponseBody, '', 2));
+  }
+  else if (requestURL.pathname === '/oas') {
+    response.writeHead(200, responseHeaders);
+    response.end(JSON.stringify(apiSpecification, '', 2))    
   }
   else {
     response.writeHead(404, responseHeaders);
-    response.end();
+    response.end(`{
+  "title": "Resource ${requestURL.pathname} not found"
+}`);
   }
 }
 

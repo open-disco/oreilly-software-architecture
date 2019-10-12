@@ -2,7 +2,7 @@
   "name": "weather-consumer",
   "version": "1.0.0",
   "description": "Weather consumer application - a demo of DISO <http://www.open-disco.org>",
-  "main": "client.js",
+  "main": "app.js",
   "author": "Zdenek Nemec <z@goodapi.co>",
   "license": "MIT",
   "private": false,

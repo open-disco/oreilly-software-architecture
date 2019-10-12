@@ -21,7 +21,10 @@ function register(data, cb) {
       serviceName: settings.serviceName,
       serviceURL: settings.serviceURL,
       renewTTL: settings.renewTTL,
-      tags: settings.tags || ""
+      tags: settings.tags || "",
+      semanticProfile: settings.semanticProfile,
+      healthURL: settings.healthURL,
+      healthTTL: settings.healthTTL,
     }
   }
 
@@ -78,8 +81,8 @@ function renew(data, cb) {
     path: url.parse(settings.renewURL).pathname,
     method: 'POST',
     headers: {
-      'Content-Type': settings.contentType,
-      'Accept': settings.acceptType,
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Accept': 'application/json',
       'Content-Length': Buffer.byteLength(body)
     }
   }
