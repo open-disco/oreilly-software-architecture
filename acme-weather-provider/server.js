@@ -64,9 +64,23 @@ discovery.register(discoSettings, (data, response) => {
 
 // Server handler
 function acmeServerHandler(request, response) {
+  // Incoming request logging
   const requestURL = url.parse(request.url);
-  console.info(`request ${requestURL.pathname}${(requestURL.search)?requestURL.search:''}`);
+  console.info(`<--- ${request.method} ${requestURL.pathname}${(requestURL.search) ? requestURL.search : ''}`);
+  console.log('<--- headers:', JSON.stringify(request.headers, '', 2));
+
+  let requestBody = [];
+  request.on('data', (chunk) => {
+    requestBody.push(chunk);
+  }).on('end', () => {
+    requestBody = Buffer.concat(requestBody).toString();
+    if (requestBody) {
+      console.log('<--- body:', requestBody);
+    }
+    console.log('\n');
+  });
   
+  // Service implementation
   if (requestURL.pathname === '/weather') {
     response.writeHead(200, responseHeaders);
     response.end(JSON.stringify(weatherResponseBody, '', 2));

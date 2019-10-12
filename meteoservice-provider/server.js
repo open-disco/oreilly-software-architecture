@@ -65,6 +65,7 @@ discovery.register(discoSettings, (data, response) => {
 
 // Server handler
 function acmeServerHandler(request, response) {
+  // Incoming request logging
   const requestURL = url.parse(request.url);
   console.info(`<--- ${request.method} ${requestURL.pathname}${(requestURL.search) ? requestURL.search : ''}`);
   console.log('<--- headers:', JSON.stringify(request.headers, '', 2));
@@ -80,6 +81,7 @@ function acmeServerHandler(request, response) {
     console.log('\n');
   });
 
+  // Service implementation
   if (requestURL.pathname === '/meteo/actuelle') {
     response.writeHead(201, responseHeaders);
     response.end(JSON.stringify(weatherResponseBody, '', 2));
