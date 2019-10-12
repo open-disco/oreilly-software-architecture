@@ -1,4 +1,5 @@
 const http = require('http');
+const url = require("url");
 const discovery = require('./disco/discovery');
 
 const PORT = 3300;
@@ -31,9 +32,17 @@ discovery.register(null, (data, response) => {
 
 // Server handler
 function acmeServerHandler(request, response) {
-  console.info('request received');
-  response.writeHead(200, responseHeaders);
-  response.end(JSON.stringify(responseBody, '', 2));
+  const requestURL = url.parse(request.url);
+  console.info(`request ${requestURL.pathname}`);
+  
+  if (requestURL.pathname === '/weather') {
+    response.writeHead(200, responseHeaders);
+    response.end(JSON.stringify(responseBody, '', 2));
+  }
+  else {
+    response.writeHead(404, responseHeaders);
+    response.end();
+  }
 }
 
 // Shutdown routine
@@ -44,6 +53,6 @@ process.on('SIGTERM', () => {
     server.close(() => {
       console.log('gracefully shutting down');
       process.exit(0);
-    });  
+    });
   });
 });
