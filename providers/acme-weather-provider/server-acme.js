@@ -4,8 +4,7 @@ const discoServer = require('../lib/disco/disco-server');
 // This service's port
 const PORT = 3300;
 const appURL = `http://localhost:${PORT}`; 
-const registryURL = `http://localhost:8282`;
-// const registryURL = `http://46.101.144.137:8282`;
+const registryURL = `https://disco-registry.herokuapp.com`;
 
 // Open DISCO Settings
 // http://www.open-disco.org

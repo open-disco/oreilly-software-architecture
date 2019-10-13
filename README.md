@@ -99,9 +99,15 @@ Added benefit of this solution is the extra resilience of the client. As the cli
 6. Client discovers the services on the register based on their allegiance to the profile
 7. Client consumes the services using the profile
 
+## Is the demo publicly hosted?
+
+Yes, you can find an implementation inspired by the code here at <https://glitch.com/~weather-consumer>.
+
 ## How can I run it by myself?
 
-Clone the [DISCO registry repository](https://github.com/open-disco/registry), run the registry on your own.
+Clone the [DISCO registry repository](https://github.com/open-disco/registry), run the registry on your own. 
+
+> Note, there is also an available public registry running at https://disco-registry.herokuapp.com/, no guarantees tho!
 
 Clone this repository ... 
 

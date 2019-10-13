@@ -44,7 +44,7 @@ async function queryWeatherServices(weatherServices) {
   weatherServices.forEach(async (service) => {
 
     // Create a client for each service
-    client = new ProfileConsumer(service.serviceURL, ActualWeatherProfileId);
+    let client = new ProfileConsumer(service.serviceURL, ActualWeatherProfileId);
 
     // Invoke the requested affordance
     const response = await 
