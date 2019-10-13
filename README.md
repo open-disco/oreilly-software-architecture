@@ -99,10 +99,9 @@ Added benefit of this solution is the extra resilience of the client. As the cli
 6. Client discovers the services on the register based on their allegiance to the profile
 7. Client consumes the services using the profile
 
-## How can I run it by myself
+## How can I run it by myself?
 
-Clone the DISCO registry repository, run the registry on your own.
-
+Clone the [DISCO registry repository](https://github.com/open-disco/registry), run the registry on your own.
 
 Clone this repository ... 
 
@@ -131,4 +130,8 @@ Then
 3. Run another service provider e.g. Méteo(`cd providers/ && yarn start-meteo`)
 4. Run the consumer  (`cd consumer/ && yarn start`)
 
+
+## Questions? 
+
+Just contact me at twitter <https://twitter.com/zdne>
 
