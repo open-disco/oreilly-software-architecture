@@ -40,15 +40,30 @@ Pure Magic.
 
 ### Profile
 
-In order for this to work there is an additonal level of indirection that abstracts away the desing details about the services. This indirection is the definiton of a _weather lookup_ domain.  The _weather lookup_ domain, subdomain of a weather domain is defined in a profile. The profile includes semantical definition of both the action and data of any service that would like to implemenet the _weather lookup_ profile.
+In order for this to work there is an additonal level of indirection that abstracts away the desing details about the services. This indirection is the definiton of the _Weather lookup_ domain.  The _Weather lookup_ domain, subdomain of a weather domain is defined in a profile. The profile includes semantical definition of both the action and data of any service that would like to implemenet the _Weather lookup_ profile.
 
 For this demonstration, the profile format is (slightly modified) [ALPS](http://alps.io) profile. You can find the definition in [`profile/actualweather-alps.yaml`](https://github.com/zdne/oreilly-software-architecture/blob/master/profile/actualweather-alps.yaml).
 
-### Consumer
-
 ### Providers
 
+The providers (servers), did not have to modify their existing implemenation for this to work. Only two additions for a provider that wishes to declare allegiance with _Weather lookup_ profile are needed:  
+
+1. Provide the API definition in [OpenAPI Specification 3.0 format](https://swagger.io/specification/) at a rutime
+2. Register itself at a discovery registry (see below)
+
+Note, provider's API definition MUST mark its operations, parameters and data that are conforming to the profile with the respective profile ids using the `x-profile` OpenAPI Spec extension ((example](https://github.com/zdne/oreilly-software-architecture/blob/master/providers/acme-weather-provider/acme-weather-openapi3.yaml#L15)).
+
+
+### Consumer
+
+The consumer (client), of any service that would claim implementation of _Weather lookup_, does not consume  the 
+
 ### Register
+
+
+
+
+
 
 
 ## Key Elements
