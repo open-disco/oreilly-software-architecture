@@ -1,7 +1,10 @@
 alps:
   version: '1.0'
   doc:
-    value: Actual weather for address locality
+    value: > 
+      Actual weather for address locality. A service conforming to this profile 
+      will offer the information about the actual weather at a given address.
+
   id: http://alps.io/profiles/actual-weather
 
   # Weather lookup affordance for given addressLocality
