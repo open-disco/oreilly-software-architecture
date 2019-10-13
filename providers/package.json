@@ -1,0 +1,15 @@
+{
+  "name": "meteoservice",
+  "version": "1.0.0",
+  "description": "Two weather services providing weather information  - a demo of DISO <http://www.open-disco.org>",
+  "author": "Zdenek Nemec <z@goodapi.co>",
+  "license": "MIT",
+  "scripts": {
+    "start-acme": "node acme-weather-provider/server-acme.js",
+    "start-meteo": "node meteoservice-provider/server-meteo.js"
+  },    
+  "dependencies": {
+    "js-yaml": "^3.13.1",
+    "superagent": "^5.1.0"
+  }
+}

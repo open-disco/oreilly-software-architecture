@@ -1,5 +1,5 @@
 const superagent = require('superagent');
-const ProfileConsumer = require('./../lib/consumer/ProfileConsumer');
+const ProfileConsumer = require('./lib/ProfileConsumer');
 
 const RegistryURL = 'http://46.101.144.137:8282'; // http://rwmbook-registry.herokuapp.com
 const ActualWeatherProfileId = 'http://alps.io/profiles/actual-weather';  // TODO: Single source of truth for this ID

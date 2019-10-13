@@ -41,10 +41,10 @@ class ProfileConsumer {
     if (!this.apiSpecification) {
       try {
         const response =
-        await superagent
-          .get(`${this.providerURL}/oas`)
-          .set('accept', 'application/json');
-          this.apiSpecification = response.body;
+          await superagent
+            .get(`${this.providerURL}/oas`)
+            .set('accept', 'application/json');
+        this.apiSpecification = response.body;
       }
       catch (e) {
         // console.error(e);
@@ -122,7 +122,7 @@ class ProfileConsumer {
         const fullParmeterId = parameter['x-profile'];
         if (fullParmeterId in inputParameters) {
           // console.log(`processing parameter...\n`, parameter);
-  
+
           if (parameter.in === 'query') {
             // Query parameters
             query.push(`${parameter.name}=${inputParameters[fullParmeterId]}`);  //TODO: pct-escape value
@@ -131,7 +131,7 @@ class ProfileConsumer {
             console.error(`parameters in '${parameter.in}' are not supported, yet`);
           }
         }
-      });  
+      });
     }
 
     //
@@ -139,7 +139,7 @@ class ProfileConsumer {
     //
     if (operation.details.requestBody) {
       // TODO: do not blindly assume application/json of object type
-      const schema = operation.details.requestBody.content['application/json'].schema; 
+      const schema = operation.details.requestBody.content['application/json'].schema;
       headers['content-type'] = 'application/json'
       body = {};
 
@@ -147,7 +147,7 @@ class ProfileConsumer {
       // TODO: revisit for real objects
       const schemaProperties = schema.properties;
       for (const propertyKey in schemaProperties) {
-        if (schemaProperties[propertyKey]['x-profile']){
+        if (schemaProperties[propertyKey]['x-profile']) {
           const propertyId = schemaProperties[propertyKey]['x-profile'];
           if (propertyId in inputParameters) {
             body[propertyKey] = inputParameters[propertyId];
@@ -157,7 +157,7 @@ class ProfileConsumer {
     }
 
     // TODO: Process other elements like headers, consumes / produces and authentication
-    
+
     // Always accept JSON
     headers['accept'] = 'application/json';
 
@@ -168,27 +168,25 @@ class ProfileConsumer {
   // Execute request
   //
   async execute(request) {
-  
-    console.log(`\n${request.method.toUpperCase()} ${request.url}${(request.query.length)?'?' + request.query.join('&'):''}`);
+    // Log the request we are making
+    console.log(`\n${request.method.toUpperCase()} ${request.url}${(request.query.length) ? '?' + request.query.join('&') : ''}`);
     console.log(`headers:`, JSON.stringify(request.headers));
     if (request.body)
       console.log(`body:`, JSON.stringify(request.body))
-
     console.log();
 
     try {
-      let response = 
+      let response =
         await superagent(
-          request.method, 
+          request.method,
           request.url)
           .query(request.query.join('&'))
           .set(request.headers)
           .send(request.body);
-      
+
       return Promise.resolve(response.body);
     }
-    catch(e) {
-      // console.error(e);
+    catch (e) {
       return Promise.reject(e);
     }
   }
@@ -202,7 +200,7 @@ class ProfileConsumer {
     requestedResponse.forEach((element) => {
       qualifiedProperties.push(`${this.profileId}#${element}`);
     });
-    
+
     // Naive, flat traversal
     // TODO: revisit for real objects
     const result = {}

@@ -6,6 +6,9 @@
   "author": "Zdenek Nemec <z@goodapi.co>",
   "license": "MIT",
   "private": false,
+  "scripts": {
+    "start": "node app.js"
+  },  
   "dependencies": {
     "superagent": "^5.1.0"
   }
