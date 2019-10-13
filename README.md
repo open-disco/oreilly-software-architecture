@@ -39,12 +39,16 @@ Pure Magic.
 ## How it really works?
 
 ### Profile
-In order for this to work there is an additonal level of indirection that abstracts away the desing details about the services. This indirection is the definiton of a "weather lookup" domain. 
+
+In order for this to work there is an additonal level of indirection that abstracts away the desing details about the services. This indirection is the definiton of a _weather lookup_ domain.  The _weather lookup_ domain, subdomain of a weather domain is defined in a profile. The profile includes semantical definition of both the action and data of any service that would like to implemenet the _weather lookup_ profile.
+
+For this demonstration, the profile format is (slightly modified) [ALPS](http://alps.io) profile. You can find the definition in [`profile/actualweather-alps.yaml`](https://github.com/zdne/oreilly-software-architecture/blob/master/profile/actualweather-alps.yaml).
 
 ### Consumer
 
 ### Providers
 
+### Register
 
 
 ## Key Elements
